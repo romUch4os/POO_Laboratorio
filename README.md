@@ -18,3 +18,6 @@ A manipulacao se da por adicao de colaboradores e projetos,
 ---- ERROS ----
 - verificar se a publiucacao ja existe antes de add no colaborador;
 - passar tudo para a interface SET(?) ou LIST(?)
+- pesquisar treeSet para ordenacao dos objetos por ano
+
+
