@@ -1,14 +1,10 @@
 # UFSJ_19-1_POO-tp1
 
-Programador: Lucas Romulo de Souza Resende
-
-@Universidade Federal de Sao Joao del Rei
-
-Specs: Trabalho 01.pdf
-
-Data: ano2019_semestre01
-
-Professor: Elder Cirilo
+- Programador: Lucas Romulo de Souza Resende
+- @Universidade Federal de Sao Joao del Rei
+- Specs: Trabalho 01.pdf
+- Data: ano2019_semestre01
+- Professor: Elder Cirilo
 
 
 
@@ -20,12 +16,9 @@ A manipulacao se da por adicao de colaboradores, projetos, e producoes academica
   
   
 VERSIONS:
-
-1.0 - working w/ Type Arrays  (OLD)
-
-1.5 - trading Type Arrays to ArrayList (CURRENT)
-
-2.0 - working w/ ArrayLists   (WORKING ON)
+- 1.0 - working w/ Type Arrays  (OLD)
+- 1.5 - trading Type Arrays to ArrayList (CURRENT)
+- 2.0 - working w/ ArrayLists   (WORKING ON)
 
 
 
