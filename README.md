@@ -1,6 +1,7 @@
 # UFSJ_19-1_POO-tp1
 
-Programador: Lucas Romulo de Souza Resende '\n'
+Programador: Lucas Romulo de Souza Resende
+
 @Universidade Federal de Sao Joao del Rei '\n'
 Specs: Trabalho 01.pdf '\n'
 Data: ano2019_semestre01 '\n'
