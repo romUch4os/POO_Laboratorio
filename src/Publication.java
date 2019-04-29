@@ -1,13 +1,15 @@
+import java.util.List;
+import java.util.ArrayList;
+
 public class Publication extends AcademicProduction{
 	
-	private int numAuthors = 0;
-	private Collaborator[] authors;
+	private List <Collaborator> authors;
 	private String conference;
 	private int year;
 	
 	public Publication() {
 		
-		authors = new Collaborator[25];
+		authors = new ArrayList<Collaborator>();
 	}
 	
 	public String getConference() {
@@ -24,13 +26,21 @@ public class Publication extends AcademicProduction{
 	}
 	
 	public int getNumAuthors() {
-		return numAuthors;
+		return authors.size();
 	}
 	
 	public void setAuthor(Collaborator author) {
-		authors[numAuthors] = author;
-		numAuthors++;
+		authors.add(author);
 	}
+	
+	public boolean isValid() {
+		
+		if( getNumAuthors() > 0 )
+			return true;
+		
+		return false;
+	}
+	
 	
 	
 }

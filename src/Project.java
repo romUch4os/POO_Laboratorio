@@ -1,3 +1,6 @@
+import java.util.List;
+import java.util.ArrayList;
+
 public class Project {
 	
 	private String title;
@@ -9,73 +12,87 @@ public class Project {
 	private String description;
 	private String status = "EM ELABORACAO";
 	private Teacher manager;
-	private int numCollaborators = 0;
-	private Collaborator[] collaborators;
-	private int numSubmissions = 0;
-	private AcademicProduction[] submissions;
+	private List <Collaborator> collaborators;
+	private List <AcademicProduction> submissions;
 	
 	public Project() {
 		
-		collaborators = new Collaborator[25];
-		submissions = new AcademicProduction[25];
+		collaborators = new ArrayList<Collaborator>();
+		submissions = new ArrayList<AcademicProduction>();
 	}
 	
 	public int getNumCollaborators() {
-		return numCollaborators;
+		return collaborators.size();
 	}
 	
 	public int getNumSubmissions() {
-		return numSubmissions;
+		return submissions.size();
 	}
 	
 	public String getStatus() {
 		return status;
 	}
+	
 	public String getTitle() {
 		return title;
 	}
+	
 	public void setTitle(String title) {
 		this.title = title;
 	}
+	
 	public Date getStartDate() {
 		return startDate;
 	}
+	
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
+	
 	public Date getEndDate() {
 		return endDate;
 	}
+	
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
+	
 	public String getAgency() {
 		return agency;
 	}
+	
 	public void setAgency(String agency) {
 		this.agency = agency;
 	}
+	
 	public String getValue() {
 		return value;
 	}
+	
 	public void setValue(String value) {
 		this.value = value;
 	}
+	
 	public String getGoal() {
 		return goal;
 	}
+	
 	public void setGoal(String goal) {
 		this.goal = goal;
 	}
+	
 	public String getDescription() {
 		return description;
 	}
+	
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	
 	public Teacher getManager() {
 		return manager;
 	}
+	
 	public void setManager(Teacher manager) {
 		this.manager = manager;
 	}
@@ -94,22 +111,29 @@ public class Project {
 	}
 	
 	public void setCollaborator(Collaborator collaborator) {
-		collaborators[numCollaborators] = collaborator;
-		numCollaborators++;
+		collaborators.add(collaborator);
 	}
 	
 	public Collaborator getCollaborator(String collaborator) {
 		
-		for(int i = 0; i < numCollaborators; i++)
-			if(collaborators[i].getName().equals(collaborator))
-				return collaborators[i];
+		for( Collaborator c: collaborators)
+			if( c.getName().equals(collaborator) )
+				return c;
 		
 		return null;
 	}
 	
+	public boolean isInProject(String collaborator) {
+		
+		for( Collaborator c: collaborators )
+			if ( c.getName().equals(collaborator) )
+				return true;
+		
+		return false;
+	}
+	
 	public void setSubmission(AcademicProduction submission) {
-		submissions[numSubmissions] = submission;
-		numSubmissions++;
+		submissions.add(submission);
 	}
 	
 	public boolean updateStatus() {
@@ -134,9 +158,9 @@ public class Project {
 		
 		String list = "";
 		
-		for(int i = 0; i < numCollaborators; i++) {
+		for( Collaborator c: collaborators ){
 			
-			list = list + collaborators[i].getName() + "; ";
+			list = list + c.getName() + "; ";
 			
 		}
 		
@@ -147,9 +171,9 @@ public class Project {
 		
 		String list = "";
 		
-		for(int i = 0; i < numSubmissions; i++) {
+		for( AcademicProduction s: submissions ){
 			
-			list = list + submissions[i].getTitle() + "; ";
+			list = list + s.getTitle() + "; ";
 			
 		}
 		

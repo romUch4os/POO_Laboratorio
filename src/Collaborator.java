@@ -1,48 +1,49 @@
+import java.util.List;
+import java.util.ArrayList;
+
 public class Collaborator{
 	
 	private String name;
 	private String email;
-	private int numProjects = 0;
-	private Project[] projects;
-	private int numSubmissions = 0;
-	private AcademicProduction[] submissions;
+	private List<Project> projects;
+	private List<AcademicProduction> submissions;
 	
 	public Collaborator() {
 		
-		projects = new Project[25];
-		submissions = new AcademicProduction[25];
+		projects = new ArrayList<Project>();
+		submissions = new ArrayList<AcademicProduction>();
 	}
-	
 	
 	public String getName() {
 		return name;
 	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}
+	
 	public String getEmail() {
 		return email;
 	}
+	
 	public void setEmail(String email) {
 		this.email = email;
 	}
 	
 	public void setProject(Project project) {
-		projects[numProjects] = project;
-		numProjects++;
+		projects.add(project);
 	}
 	
 	public void setSubmissions(AcademicProduction submission) {
-		submissions[numSubmissions] = submission;
-		numSubmissions++;
+		submissions.add(submission);
 	}
 	
 	public String listProjects() {
 		
 		String projectList = "";
 		
-		for(int i = 0; i < numProjects; i ++)
-			projectList = projectList + projects[i].getTitle() + "; ";
+		for( Project p: projects )
+			projectList = projectList + p.getTitle() + "; ";
 			
 		return projectList;
 	}
@@ -51,8 +52,8 @@ public class Collaborator{
 		
 		String submissionsList = "";
 		
-		for(int i = 0; i < numSubmissions; i++)
-			submissionsList = submissionsList + submissions[i].getTitle() + "; ";
+		for( AcademicProduction s: submissions )
+			submissionsList = submissionsList + s.getTitle() + "; ";
 			
 		return submissionsList;
 	}

@@ -251,20 +251,22 @@ public class Program{
 			System.out.println("Colaboradores da publicacao:");
 			System.out.println("Digite 'final' quando terminar");
 			String collaborator;
+			
 			do {
 
 				System.out.println("Colaborador:");				
 				collaborator = s.next();
 				
-				Collaborator c = project.getCollaborator(collaborator);
-				
-				if(!(c == null)) {
+				if( project.isInProject(collaborator) ) {
+					
+					Collaborator c = project.getCollaborator(collaborator);
 					publication.setAuthor(c);
 					c.setSubmissions(publication);
+					
 				} else
 					System.out.println("COOLABORADOR NAO EXISTE OU NAO PARTICIPA DO PROJETO!!");
 				
-			}while(!(collaborator.equals("final")));
+			}while(!( collaborator.equals("final") ));
 			
 			if(lab.addSubmission(publication)) {
 				

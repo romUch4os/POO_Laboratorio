@@ -1,18 +1,19 @@
+import java.util.List;
+import java.util.ArrayList;
+
+
 public class Lab{
 	
 	private String name = "fucking LAB da UFSJ";
-	private int numCollaborators = 0;
-	private Collaborator[] collaborators;
-	private int numProjects = 0;
-	private Project[] projects;
-	private int numSubmissions = 0;
-	private AcademicProduction[] submissions;
+	private List <Collaborator> collaborators;
+	private List <Project> projects;
+	private List <AcademicProduction> submissions;
 	
 	public Lab(){
 		
-		collaborators = new Collaborator[25];
-		projects = new Project[25];
-		submissions = new AcademicProduction[25];
+		collaborators = new ArrayList<Collaborator>();
+		projects = new ArrayList<Project>();
+		submissions = new ArrayList<AcademicProduction>();
 	}
 	
 	
@@ -21,111 +22,127 @@ public class Lab{
 	}
 	
 	public int getNumCollaborators() {
-		return numCollaborators;
+		return collaborators.size();
 	}
 	
 	public int getNumProjects() {
-		return numProjects;
+		return projects.size();
 	}
 	
 	public int getNumSubmissions() {
-		return numSubmissions;
+		return submissions.size();
 	}
 	
-	public Project getProject(String title) {
+	public boolean isCollaborator(String name) {
 		
-		for(int i = 0; i < numProjects; i++)
-			if(projects[i].getTitle().equals(title))
-				return projects[i];
+		for( Collaborator c: collaborators )
+			if( c.getName().equals(name) )
+				return true;
 		
-		return null;
+		return false;
 	}
 	
 	public Collaborator getCollaborator(String name) {
 		
-		for(int i = 0; i < numCollaborators; i++)
-			if(collaborators[i].getName().equals(name))
-				return collaborators[i];
+		for( Collaborator c: collaborators )
+			if( c.getName().equals(name))
+				return c;
 		
 		return null;
 	}
 	
-	/*
-	public boolean addProject(Project project) {
+	public boolean isProject(String title) {
 		
-		for(Project p: projects)
-			if(p.getTitle().equals(project.getTitle()))
-				return false;
+		for( Project p: projects )
+			if( p.getTitle().equals(title) )
+				return true;
 		
-		for(Collaborator c: collaborators)
-			if(c.getName().equals(project.getManager()))
-				if(!(c instanceof Teacher))
-					return false;
-		
-		projects[projects.length] = project;
-		
-		return true;
-		
+		return false;
 	}
-	*/
+	
+	public Project getProject(String title) {
+		
+		for( Project p: projects )
+			if( p.getTitle().equals(title))
+				return p;
+		
+		return null;
+	}
+	
+	public boolean isSubmission(String title) {
+		
+		for( AcademicProduction s: submissions )
+			if( s.getTitle().equals(title) )
+				return true;
+		
+		return false;
+	}
+	
+	public AcademicProduction getSubmission(String title) {
+		
+		for( AcademicProduction s: submissions )
+			if( s.getTitle().equals(title))
+				return s;
+		
+		return null;
+	}
 
 	public boolean addProject(Project project) {
 		
-		for(int i = 0; i < numProjects; i++)
-			if(projects[i].getTitle().equals(project.getTitle()))
-				return false;
-		
-		Collaborator collaborator = getCollaborator(project.getManager().getName());
-		
-		if(collaborator == null)
+		if(!( isCollaborator( project.getManager().getName() ) ))
 			return false;
 		
-		if(!(collaborator instanceof Teacher))
+		Collaborator collaborator = getCollaborator( project.getManager().getName() );
+		
+		if(!( collaborator instanceof Teacher ))
 			return false;
 		
 		project.setCollaborator(collaborator);
 		collaborator.setProject(project);
 		
-		projects[numProjects] = project;
-		numProjects++;
+		projects.add(project);
 		
 		return true;
 	}
 	
 	public boolean addCollaborator(Collaborator collaborator) {
 		
-		for(int i = 0; i < this.numCollaborators; i++) 
-			if(collaborators[i].getName().equals(collaborator.getName()))
-				return false;
+		if( isCollaborator( collaborator.getName() ))
+			return false;
 		
-		collaborators[numCollaborators] = collaborator;
-		numCollaborators++;
+		collaborators.add(collaborator);
 		
 		return true;
 		
 	}
+	
 	public boolean addSubmission(AcademicProduction submission) {
 		
-		if(submission instanceof Publication)
-			if(((Publication) submission).getNumAuthors() <= 0)
+		if( submission instanceof Publication )
+			if(!( ((Publication) submission).isValid() ))
 				return false;
 		
-		submissions[numSubmissions] = submission;
-		numSubmissions++;
+		submissions.add(submission);
 		return true;
 	}
 	
 	
 	public boolean allocCollaborator(String collaborator, String project) {
 		
+		if(!( isCollaborator(collaborator) ))
+			return false;
+		
+		if(!( isProject(project) ))
+			return false;
+		
 		Collaborator c = getCollaborator(collaborator);
 		Project p = getProject(project);
 		
-		if(c instanceof GraduationStudent)
-			if(((GraduationStudent) c).getInProject())
+		if( c instanceof GraduationStudent )
+			if( ((GraduationStudent)c).getInProject() )
 				return false;
 			else
-				((GraduationStudent) c).setInProject(true);
+				((GraduationStudent)c).setInProject(true);
 		
 		c.setProject(p);
 		p.setCollaborator(c);
@@ -137,8 +154,8 @@ public class Lab{
 		
 		int num = 0;
 		
-		for(int i = 0; i < numProjects; i++)
-			if(projects[i].getStatus().equals("EM ELABORACAO"))
+		for( Project p: projects)
+			if( p.getStatus().equals("EM ELABORACAO") );
 				num++;
 		
 		return num;
@@ -148,8 +165,8 @@ public class Lab{
 		
 		int num = 0;
 		
-		for(int i = 0; i < numProjects; i++)
-			if(projects[i].getStatus().equals("EM ANDAMENTO"))
+		for( Project p: projects )
+			if( p.getStatus().equals("EM ANDAMENTO") )
 				num++;
 		
 		return num;
@@ -159,8 +176,8 @@ public class Lab{
 		
 		int num = 0;
 		
-		for(int i = 0; i < numProjects; i++)
-			if(projects[i].getStatus().equals("CONCLUIDO"))
+		for( Project p: projects )
+			if( p.getStatus().equals("CONCLUIDO") )
 				num++;
 		
 		return num;
