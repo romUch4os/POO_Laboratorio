@@ -11,3 +11,9 @@ A ideia do trabalho eh criar um "banco de dados" de um laboratorio da UFSJ.
 A manipulacao se da por adicao de colaboradores e projetos,
   sendo possivel a emissao de um relatorio da producao de cada colaborador,
   de cada projeto ou do laboratorio todo. 
+
+
+
+
+---- ERROS ----
+- verificar se a publiucacao ja existe antes de add no colaborador;
