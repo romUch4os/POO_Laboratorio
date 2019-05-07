@@ -1,17 +1,17 @@
-import java.util.List;
-import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
 
 public class Collaborator{
 	
 	private String name;
 	private String email;
-	private List<Project> projects;
-	private List<AcademicProduction> submissions;
+	private Set<Project> projects;
+	private Set<AcademicProduction> submissions;
 	
 	public Collaborator() {
 		
-		projects = new ArrayList<Project>();
-		submissions = new ArrayList<AcademicProduction>();
+		projects = new HashSet<Project>();
+		submissions = new HashSet<AcademicProduction>();
 	}
 	
 	public String getName() {
@@ -34,12 +34,15 @@ public class Collaborator{
 		projects.add(project);
 	}
 	
-	public void setSubmissions(AcademicProduction submission) {
+	public void setSubmission(AcademicProduction submission) {
 		submissions.add(submission);
 	}
 	
+	//	a listagem pode ser feita apenas com um get
+	//	mas preferi visualmente assim
+	
 	public String listProjects() {
-		
+
 		String projectList = "";
 		
 		for( Project p: projects )

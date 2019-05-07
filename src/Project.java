@@ -1,5 +1,5 @@
-import java.util.List;
-import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
 
 public class Project {
 	
@@ -12,13 +12,13 @@ public class Project {
 	private String description;
 	private String status = "EM ELABORACAO";
 	private Teacher manager;
-	private List <Collaborator> collaborators;
-	private List <AcademicProduction> submissions;
+	private Set<Collaborator> collaborators;
+	private Set<AcademicProduction> submissions;
 	
 	public Project() {
 		
-		collaborators = new ArrayList<Collaborator>();
-		submissions = new ArrayList<AcademicProduction>();
+		collaborators = new HashSet<Collaborator>();
+		submissions = new HashSet<AcademicProduction>();
 	}
 	
 	public int getNumCollaborators() {
@@ -145,7 +145,7 @@ public class Project {
 		
 		if( status.contentEquals("EM ANDAMENTO") ) {
 			
-			if(getNumSubmissions() > 0) {
+			if( getNumSubmissions() > 0 ) {
 				status = "CONCLUIDO";
 				return true;
 			}

@@ -1,15 +1,15 @@
-import java.util.List;
-import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
 
 public class Publication extends AcademicProduction{
 	
-	private List <Collaborator> authors;
+	private Set<Collaborator> authors;
 	private String conference;
 	private int year;
 	
 	public Publication() {
 		
-		authors = new ArrayList<Collaborator>();
+		authors = new HashSet<Collaborator>();
 	}
 	
 	public String getConference() {

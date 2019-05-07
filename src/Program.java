@@ -11,56 +11,32 @@ public class Program{
 		
 		do {
 			
-		System.out.println("Bem vindo ao " +lab.getName());
+		System.out.println("< Bem vindo ao " + lab.getName() + " >");
 		System.out.println("Suas opcoes sao:");
-		System.out.println("1)  Novo Projeto");
-		System.out.println("2)  Novo Aluno da Graduacao");
-		System.out.println("3)  Novo Aluno do Mestrado");
-		System.out.println("4)  Novo Pesquisador");
-		System.out.println("5)  Novo Professor");
-		System.out.println("6)  Alocar Participante");
-		System.out.println("7)  Atualizar Status do Projeto");
-		System.out.println("8)  Nova Publicacao");
-		System.out.println("9)  Consultar Colaborador");
-		System.out.println("10) Consultar Projeto");
-		System.out.println("11) Relatorio Producao Academica");
-		System.out.println("0) Sair");
+		System.out.println("1)  Menu Projeto( Novo; Atualizar status; Publicar )");
+		System.out.println("2)  Adicionar Colaborador");
+		System.out.println("3)  Alocar Colaborador");
+		System.out.println("4)  Consultar( Colaborador; Projeto )");
+		System.out.println("5)  Relatorio Producao Academica");
+		System.out.println("0)  Sair");
 		System.out.print("Selecione a opcao: ");
 		
 		opt = s.nextInt();
 		
 			switch(opt) {
 				case 1:
-					addProject();
+					projectMenu();
 					break;
 				case 2:
-					addGradStudent();
+					collaboratorMenu();
 					break;
 				case 3:
-					addMastersStudent();
-					break;
-				case 4:
-					addResearcher();
-					break;
-				case 5:
-					addTeacher();
-					break;
-				case 6:
 					allocCollaborator();
 					break;
-				case 7:
-					updateStatus();
+				case 4:
+					consultMenu();
 					break;
-				case 8:
-					addPublication();
-					break;
-				case 9:
-					seeCollaborator();
-					break;
-				case 10:
-					seeProject();
-					break;
-				case 11:
+				case 5:
 					report();
 					break;
 				case 0:
@@ -72,9 +48,87 @@ public class Program{
 		s.close();
 	}
 	
+	public static void projectMenu() {
+		
+		System.out.println("<---- Menu Projeto ---->");
+		System.out.println("1)  Novo projeto");
+		System.out.println("2)  Atualizar status do projeto");
+		System.out.println("3)  Nova publicacao");
+		System.out.println("-)  Qualquer outro valor p/ voltar");
+		
+		int opt = s.nextInt();
+		
+		switch(opt) {
+		
+			case 1:
+				addProject();
+				break;
+			case 2:
+				updateStatus();
+				break;
+			case 3:
+				addPublication();
+				break;
+			default:
+				break;
+		}
+	}
+	
+	public static void collaboratorMenu() {
+		
+		System.out.println("<---- Adicionar Colaborador ---->");
+		System.out.println("1)  Estudante de Graduacao");
+		System.out.println("2)  Estudante de Mestrado");
+		System.out.println("3)  Pesquisador");
+		System.out.println("4)  Professor");
+		System.out.println("-)  Qualquer outro valor p/ voltar");
+		
+		int opt = s.nextInt();
+		
+		switch(opt) {
+		
+			case 1:
+				addGradStudent();
+				break;
+			case 2:
+				addMastersStudent();
+				break;
+			case 3:
+				addResearcher();
+				break;
+			case 4:
+				addTeacher();
+				break;
+			default:
+				break;
+		}
+	}
+	
+	public static void consultMenu() {
+		
+		System.out.println("<---- Menu Consulta ---->");
+		System.out.println("1)  Colaborador");
+		System.out.println("2)  Projeto");
+		System.out.println("-)  Qualquer outro valor p/ voltar");
+		
+		int opt = s.nextInt();
+		
+		switch(opt) {
+		
+			case 1:
+				consultCollaborator();
+				break;
+			case 2:
+				consultProject();
+				break;
+			default:
+				break;
+		}
+	}
+	
 	public static void addProject() {
 		
-		System.out.println("Titulo do projeto:");
+		System.out.println("-> Titulo do projeto:");
 		String title = s.next();
 		
 		System.out.println("Professor gerente:");
@@ -121,7 +175,7 @@ public class Program{
 		project.setGoal(goal);
 		project.setDescription(description);
 		
-		if(lab.addProject(project))
+		if( lab.addProject(project) )
 			System.out.println("Projeto adicionado!!");
 		
 		else
@@ -131,7 +185,7 @@ public class Program{
 	
 	public static void addCollaborator(Collaborator c) {
 		
-		System.out.println("Nome do colaborador:");
+		System.out.println("-> Nome do colaborador:");
 		String name = s.next();
 		
 		System.out.println("Email do colaborador:");
@@ -147,7 +201,7 @@ public class Program{
 		
 		addCollaborator(student);
 		
-		if(lab.addCollaborator(student))
+		if( lab.addCollaborator(student) )
 			System.out.println("Estudante de Graduacao addicionado!");
 		else
 			System.out.println("Ja existe colaborador com esse nome!");
@@ -159,7 +213,7 @@ public class Program{
 		
 		addCollaborator(student);
 		
-		if(lab.addCollaborator(student))
+		if( lab.addCollaborator(student) )
 			System.out.println("Estudante de Mestrado addicionado!");
 		else
 			System.out.println("Ja existe colaborador com esse nome!");
@@ -171,7 +225,7 @@ public class Program{
 		
 		addCollaborator(researcher);
 		
-		if(lab.addCollaborator(researcher))
+		if( lab.addCollaborator(researcher) )
 			System.out.println("Pesquisador addicionado!");
 		else
 			System.out.println("Ja existe colaborador com esse nome!");
@@ -183,7 +237,7 @@ public class Program{
 		
 		addCollaborator(teacher);
 		
-		if(lab.addCollaborator(teacher))
+		if( lab.addCollaborator(teacher) )
 			System.out.println("Professor addicionado!");
 		else
 			System.out.println("Ja existe colaborador com esse nome!");
@@ -192,14 +246,14 @@ public class Program{
 	
 	public static void allocCollaborator() {
 		
-		System.out.println("Alocaremos um colaborador para algum projeto!");
+		System.out.println("-> Alocaremos um colaborador para algum projeto!");
 		System.out.println("Colaborador:");
 		String name = s.next();
 		
 		System.out.println("Projeto:");
 		String project = s.next();
 		
-		if(lab.allocCollaborator(name, project))
+		if( lab.allocCollaborator(name, project) )
 			System.out.println("Colaborador alocado com sucesso!");
 		else
 			System.out.println("ALOCACAO INVALIDA!!");
@@ -207,16 +261,16 @@ public class Program{
 
 	public static void updateStatus() {
 		
-		System.out.println("Atualizar status de qual projeto?");
+		System.out.println("-> Atualizar status de qual projeto?");
 		String title = s.next();
 		
 		Project project = lab.getProject(title);
 		
-		if(!(project == null)) {
+		if( ! (project == null) ) {
 			
 			System.out.println("Status antigo:" + project.getStatus());
 			
-			if(!(project.updateStatus()))
+			if( ! (project.updateStatus()) )
 				System.out.println("O STATUS NAO PODE SER ALTERADO!!");
 				
 			System.out.println("Status atual:" + project.getStatus());
@@ -227,12 +281,12 @@ public class Program{
 	
 	public static void addPublication() {
 		
-		System.out.println("A qual projeto pertence a publicacao?");
+		System.out.println("-> A qual projeto pertence a publicacao?");
 		String projectTitle = s.next();
 		
 		Project project = lab.getProject(projectTitle);
 		
-		if((project != null) && (project.getStatus().equals("EM ANDAMENTO"))) {
+		if( ( project != null ) && ( project.getStatus().equals("EM ANDAMENTO") ) ) {
 
 			System.out.println("Titulo da publicacao:");
 			String title = s.next();
@@ -261,12 +315,14 @@ public class Program{
 					
 					Collaborator c = project.getCollaborator(collaborator);
 					publication.setAuthor(c);
-					c.setSubmissions(publication);
+					c.setSubmission(publication);
 					
 				} else
-					System.out.println("COOLABORADOR NAO EXISTE OU NAO PARTICIPA DO PROJETO!!");
+					if( ! (collaborator.equals("final")) )
+						System.out.println("COOLABORADOR "
+								+ "NAO EXISTE OU NAO PARTICIPA DO PROJETO!!");
 				
-			}while(!( collaborator.equals("final") ));
+			}while( ! (collaborator.equals("final") ));
 			
 			if(lab.addSubmission(publication)) {
 				
@@ -281,38 +337,36 @@ public class Program{
 			System.out.println("PUBLICACAO INVALIDA!!");
 	}
 	
-	public static void seeCollaborator() {
+	public static void consultCollaborator() {
 		
 		System.out.println("Nome do colaborador:");
 		String name = s.next();
 		
 		Collaborator collaborator = lab.getCollaborator(name);
 		
-		if(!(collaborator == null)) {
+		if( ! (collaborator == null) ) {
 
-			System.out.println("Informacoes do colaborador:");
+			System.out.println("-> Informacoes do colaborador:");
 			System.out.println("Nome: " + collaborator.getName());
 			System.out.println("Email: " + collaborator.getEmail());
 
 			System.out.println("Projetos: " + collaborator.listProjects());
-
-			System.out.println("Producao academica: " 
-					+ collaborator.listSubmissions());
+			System.out.println("Producao academica: " + collaborator.listSubmissions());
 			
 		} else
 			System.out.println("NOME INVALIDO!!");
 	}
 	
-	public static void seeProject() {
+	public static void consultProject() {
 		
 		System.out.println("Titulo do projeto:");
 		String title = s.next();
 		
 		Project project = lab.getProject(title);
 		
-		if(!(project == null)) {
+		if( ! (project == null) ){
 			
-			System.out.println("Insformacoes do projeto(" + project.getStatus() + "):");
+			System.out.println("-> Insformacoes do projeto(" + project.getStatus() + "):");
 			System.out.println("Descricao: " + project.getDescription());
 			System.out.println("Gerente: " + project.getManager().getName());
 			System.out.println("Data: " + project.getDate());
@@ -329,7 +383,7 @@ public class Program{
 	
 	public static void report() {
 		
-		System.out.println("Relatorio de producao do laboratorio:");
+		System.out.println("-> Relatorio de producao do laboratorio:");
 		System.out.println("Colaboradores:" + lab.getNumCollaborators());
 		System.out.println("Projetos em elaboracao:" + lab.getNumBuilding());
 		System.out.println("Projetos em andamento:" + lab.getNumInProgress());
@@ -338,7 +392,4 @@ public class Program{
 		System.out.println("Publicacoes/Orientacoes:" + lab.getNumSubmissions());
 		
 	}
-	
-	
-	
 }

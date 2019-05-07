@@ -1,19 +1,20 @@
-import java.util.List;
-import java.util.ArrayList;
-
+import java.util.Set;
+import java.util.HashSet;
 
 public class Lab{
 	
 	private String name = "fucking LAB da UFSJ";
-	private List <Collaborator> collaborators;
-	private List <Project> projects;
-	private List <AcademicProduction> submissions;
+	// fazer as modificacoes pra passar pra collaborators pra HashSet
+	// e dos outros comentarios
+	private Set<Collaborator> collaborators;
+	private Set<Project> projects;
+	private Set<AcademicProduction> submissions;
 	
 	public Lab(){
 		
-		collaborators = new ArrayList<Collaborator>();
-		projects = new ArrayList<Project>();
-		submissions = new ArrayList<AcademicProduction>();
+		collaborators = new HashSet<Collaborator>();
+		projects = new HashSet<Project>();
+		submissions = new HashSet<AcademicProduction>();
 	}
 	
 	
@@ -154,7 +155,7 @@ public class Lab{
 		
 		int num = 0;
 		
-		for( Project p: projects)
+		for( Project p: projects )
 			if( p.getStatus().equals("EM ELABORACAO") );
 				num++;
 		
