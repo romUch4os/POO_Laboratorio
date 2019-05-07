@@ -16,15 +16,14 @@ A manipulacao se da por adicao de colaboradores, projetos, e producoes academica
   
   
 VERSIONS:
-- 1.0 - working w/ Type Arrays  (OLD)
-- 1.5 - trading Type Arrays to ArrayList (CURRENT)
-- 2.0 - working w/ ArrayLists   (WORKING ON)
-
-
+- 1.0 - working w/ Type Arrays
+- 2.0 - working w/ ArrayLists
+- 3.0 - working w/ Set (HashSet/TreeSet) (WORKING ON)
 
 
 
 ---- OBSs ----
-- verificar se a publiucacao ja existe antes de add no colaborador;
-- passar tudo para a interface SET(?) ou LIST(?)
-- pesquisar treeSet para ordenacao dos objetos por ano
+- esqueci uma note na parte de listar projetos do colaborador, tirar ela de lah;
+- pesquisar:
+  - treeSet para ordenacao dos objetos por ano;
+  - impedir add mesmo nome (colaborador/projeto) por hashSet;
