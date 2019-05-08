@@ -16,9 +16,9 @@ A manipulacao se da por adicao de colaboradores, projetos, e producoes academica
   
   
 VERSIONS:
-- 1.0 - working w/ Type Arrays
-- 2.0 - working w/ ArrayLists
-- 3.0 - working w/ Set (HashSet/TreeSet) (WORKING ON)
+- 1.0 - builded w/ Type Arrays
+- 2.0 - builded w/ ArrayLists
+- 3.0 - builded w/ Set (HashSet/TreeSet) (WORKING ON)
 
 
 
