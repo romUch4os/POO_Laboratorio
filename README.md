@@ -4,7 +4,7 @@
 - @Universidade Federal de Sao Joao del Rei
 - Specs: Trabalho 01.pdf
 - Data: ano2019_semestre01
-- Professor: Elder Cirilo
+- Professor: Elder Jose Reioli Cirilo
 
 
 
@@ -15,12 +15,6 @@ A manipulacao se da por adicao de colaboradores, projetos, e producoes academica
   
   
   
-VERSIONS:
-- 1.0 - builded w/ Type Arrays
-- 2.0 - builded w/ ArrayLists
-- 3.0 - builded w/ Set (HashSet/TreeSet) (WORKING ON)
-
-
 
 ---- OBSs ----
 - esqueci uma note na parte de listar projetos do colaborador, tirar ela de lah;
