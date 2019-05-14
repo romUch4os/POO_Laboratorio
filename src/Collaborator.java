@@ -1,12 +1,13 @@
-import java.util.Set;
+import java.util.Collection;
 import java.util.HashSet;
 
 public class Collaborator{
 	
+	private int id;
 	private String name;
 	private String email;
-	private Set<Project> projects;
-	private Set<AcademicProduction> submissions;
+	private Collection<Project> projects;
+	private Collection<AcademicProduction> submissions;
 	
 	public Collaborator() {
 		
@@ -38,9 +39,6 @@ public class Collaborator{
 		submissions.add(submission);
 	}
 	
-	//	a listagem pode ser feita apenas com um get
-	//	mas preferi visualmente assim
-	
 	public String listProjects() {
 
 		String projectList = "";
@@ -59,5 +57,27 @@ public class Collaborator{
 			submissionsList = submissionsList + s.getTitle() + "; ";
 			
 		return submissionsList;
+	}
+
+	// tentaativa implementar hashCode e equals
+	public boolean equals(Object obj) {
+		
+		if( obj == null )
+			return false;
+		
+		if(!( obj instanceof Collaborator ))
+			return false;
+		
+		if( this == obj )
+			return true;
+		
+		//return getName() == ((Collaborator) obj).getName();
+		return this.hashCode() == ((Collaborator) obj).hashCode();
+	}
+
+	public int hashCode() {
+		
+		id = name.hashCode();
+		return id;
 	}
 }

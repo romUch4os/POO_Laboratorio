@@ -1,8 +1,9 @@
-import java.util.Set;
+import java.util.Collection;
 import java.util.HashSet;
 
 public class Project {
 	
+	private int id;
 	private String title;
 	private Date startDate;
 	private Date endDate;
@@ -12,8 +13,8 @@ public class Project {
 	private String description;
 	private String status = "EM ELABORACAO";
 	private Teacher manager;
-	private Set<Collaborator> collaborators;
-	private Set<AcademicProduction> submissions;
+	private Collection<Collaborator> collaborators;
+	private Collection<AcademicProduction> submissions;
 	
 	public Project() {
 		
@@ -178,5 +179,25 @@ public class Project {
 		}
 		
 		return list;
+	}
+	
+	public boolean equals(Object obj) {
+		
+		if( obj == null )
+			return false;
+		
+		if( !( obj instanceof Project ) )
+			return false;
+		
+		if( this == obj )
+			return true;
+		
+		return this.hashCode() == ((Project) obj).hashCode();
+	}
+	
+	public int hashCode() {
+		
+		id = title.hashCode();
+		return id;
 	}
 }

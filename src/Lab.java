@@ -1,14 +1,12 @@
-import java.util.Set;
+import java.util.Collection;
 import java.util.HashSet;
 
 public class Lab{
 	
 	private String name = "fucking LAB da UFSJ";
-	// fazer as modificacoes pra passar pra collaborators pra HashSet
-	// e dos outros comentarios
-	private Set<Collaborator> collaborators;
-	private Set<Project> projects;
-	private Set<AcademicProduction> submissions;
+	private Collection<Collaborator> collaborators;
+	private Collection<Project> projects;
+	private Collection<AcademicProduction> submissions;
 	
 	public Lab(){
 		
@@ -46,7 +44,7 @@ public class Lab{
 	public Collaborator getCollaborator(String name) {
 		
 		for( Collaborator c: collaborators )
-			if( c.getName().equals(name))
+			if( c.getName().equals(name) )
 				return c;
 		
 		return null;
@@ -87,25 +85,8 @@ public class Lab{
 		
 		return null;
 	}
-
-	public boolean addProject(Project project) {
-		
-		if(!( isCollaborator( project.getManager().getName() ) ))
-			return false;
-		
-		Collaborator collaborator = getCollaborator( project.getManager().getName() );
-		
-		if(!( collaborator instanceof Teacher ))
-			return false;
-		
-		project.setCollaborator(collaborator);
-		collaborator.setProject(project);
-		
-		projects.add(project);
-		
-		return true;
-	}
 	
+/*	
 	public boolean addCollaborator(Collaborator collaborator) {
 		
 		if( isCollaborator( collaborator.getName() ))
@@ -113,8 +94,46 @@ public class Lab{
 		
 		collaborators.add(collaborator);
 		
-		return true;
+		return false;
 		
+	}
+*/
+	
+	// testando implementacao de hashCode e equals
+	// na classe Collaborator
+	public boolean addCollaborator(Collaborator c) {
+		
+		c.hashCode();
+		
+		if( collaborators.contains(c) )
+			return false;
+		
+		return collaborators.add(c);
+	}
+	
+	public boolean addProject(Project project) {
+		
+		// usar try/catch e instaceof se verificacao for aqui
+		// senao, sao inuteis, apagar
+		try {
+			getCollaborator( project.getManager().getName() );
+			
+		} catch(NullPointerException e) {
+			
+			return false;
+		}
+		
+		Collaborator c = getCollaborator( project.getManager().getName() );
+			
+		if(!( c instanceof Teacher ))
+			return false;
+		
+		project.setCollaborator(c);
+		c.setProject(project);
+		
+		projects.add(project);
+		
+		return true;
 	}
 	
 	public boolean addSubmission(AcademicProduction submission) {
@@ -122,9 +141,9 @@ public class Lab{
 		if( submission instanceof Publication )
 			if(!( ((Publication) submission).isValid() ))
 				return false;
-		
+
 		submissions.add(submission);
-		return true;
+		return true;	
 	}
 	
 	

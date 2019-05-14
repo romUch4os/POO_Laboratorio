@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class Program{
 	
-	static Lab lab = new Lab();
+	public static Lab lab = new Lab();
 	static Scanner s = new Scanner(System.in);
 	
 	public static void main(String args[]) {
@@ -136,50 +136,56 @@ public class Program{
 			
 		Collaborator manager = lab.getCollaborator(managerName);
 		
-		int month;
-		int year;
-		
-		System.out.println("Data de inicio(MM-YY):");
-		System.out.println("Mês:");
-		month = s.nextInt();
-		System.out.println("Ano:");
-		year = s.nextInt();
-		Date startDate = new Date(month, year);
-		
-		System.out.println("Data de termino(MM-YY):");
-		System.out.println("Mês:");
-		month = s.nextInt();
-		System.out.println("Ano:");
-		year = s.nextInt();
-		Date endDate = new Date(month, year);
-		
-		System.out.println("Agencia financiadora:");
-		String agency = s.next();
-		
-		System.out.println("Valor financiado:");
-		String value = s.next();
-		
-		System.out.println("Objetivo do projeto:");
-		String goal = s.next();
-		
-		System.out.println("Descricao do projeto:");
-		String description = s.next();
-		
-		Project project = new Project();
-		project.setTitle(title);
-		project.setManager((Teacher)manager);
-		project.setStartDate(startDate);
-		project.setEndDate(endDate);
-		project.setAgency(agency);
-		project.setValue(value);
-		project.setGoal(goal);
-		project.setDescription(description);
-		
-		if( lab.addProject(project) )
-			System.out.println("Projeto adicionado!!");
-		
-		else
-			System.out.println("Dados invalidos!!");
+		// eh melhor fazer essas verificacoes aqui ou em lab?
+		if( (manager != null) && (manager instanceof Teacher) ) {
+			
+			int month;
+			int year;
+			
+			System.out.println("Data de inicio(MM-YY):");
+			System.out.println("Mês:");
+			month = s.nextInt();
+			System.out.println("Ano:");
+			year = s.nextInt();
+			Date startDate = new Date(month, year);
+			
+			System.out.println("Data de termino(MM-YY):");
+			System.out.println("Mês:");
+			month = s.nextInt();
+			System.out.println("Ano:");
+			year = s.nextInt();
+			Date endDate = new Date(month, year);
+			
+			System.out.println("Agencia financiadora:");
+			String agency = s.next();
+			
+			System.out.println("Valor financiado:");
+			String value = s.next();
+			
+			System.out.println("Objetivo do projeto:");
+			String goal = s.next();
+			
+			System.out.println("Descricao do projeto:");
+			String description = s.next();
+			
+			Project project = new Project();
+			project.setTitle(title);
+			project.setManager((Teacher) manager);
+			project.setStartDate(startDate);
+			project.setEndDate(endDate);
+			project.setAgency(agency);
+			project.setValue(value);
+			project.setGoal(goal);
+			project.setDescription(description);
+			
+			if( lab.addProject(project) )
+				System.out.println("Projeto adicionado!!");
+			
+			else
+				System.out.println("Dados invalidos!!");
+			
+		} else
+			System.out.println("COLABORADOR INVALIDO!!");
 	}
 	
 	
@@ -286,6 +292,7 @@ public class Program{
 		
 		Project project = lab.getProject(projectTitle);
 		
+		// mesma duvida do addProject
 		if( ( project != null ) && ( project.getStatus().equals("EM ANDAMENTO") ) ) {
 
 			System.out.println("Titulo da publicacao:");
@@ -334,7 +341,7 @@ public class Program{
 				System.out.println("PUBLICACAO INVALIDA!!");
 		
 		} else
-			System.out.println("PUBLICACAO INVALIDA!!");
+			System.out.println("PROJETO INVALIDO!!");
 	}
 	
 	public static void consultCollaborator() {
