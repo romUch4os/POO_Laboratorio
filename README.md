@@ -17,7 +17,6 @@ A manipulacao se da por adicao de colaboradores, projetos, e producoes academica
   
 
 ---- OBSs ----
-- esqueci uma note na parte de listar projetos do colaborador, tirar ela de lah;
 - pesquisar:
   - treeSet para ordenacao dos objetos por ano;
   - impedir add mesmo nome (colaborador/projeto) por hashSet;
