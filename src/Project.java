@@ -1,5 +1,6 @@
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.TreeSet;
 
 public class Project {
 	
@@ -111,10 +112,6 @@ public class Project {
 		return date;
 	}
 	
-	public void setCollaborator(Collaborator collaborator) {
-		collaborators.add(collaborator);
-	}
-	
 	public Collaborator getCollaborator(String collaborator) {
 		
 		for( Collaborator c: collaborators)
@@ -124,19 +121,20 @@ public class Project {
 		return null;
 	}
 	
-	public boolean isInProject(String collaborator) {
-		
-		for( Collaborator c: collaborators )
-			if ( c.getName().equals(collaborator) )
-				return true;
-		
-		return false;
+	public void setCollaborator(Collaborator collaborator) {
+		collaborators.add(collaborator);
+	}
+	
+	public boolean isInProject(Collaborator c) {
+		return collaborators.contains(c);
 	}
 	
 	public void setSubmission(AcademicProduction submission) {
 		submissions.add(submission);
 	}
 	
+	//	verifica e atualiza etapas do projeto
+	//	etapas: elaboracao -> andamento -> conclusao
 	public boolean updateStatus() {
 		
 		if( status.contentEquals("EM ELABORACAO") ) {
@@ -147,7 +145,13 @@ public class Project {
 		if( status.contentEquals("EM ANDAMENTO") ) {
 			
 			if( getNumSubmissions() > 0 ) {
+				
+				for( Collaborator c : collaborators )
+					if( c instanceof GraduationStudent )
+						((GraduationStudent) c).freeStudent();
+				
 				status = "CONCLUIDO";
+				
 				return true;
 			}
 		}
@@ -155,44 +159,30 @@ public class Project {
 		return false;
 	}
 	
-	public String listCollaborators() {
+	public Collection<Collaborator> listCollaborators() {
 		
-		String list = "";
-		
-		for( Collaborator c: collaborators ){
-			
-			list = list + c.getName() + "; ";
-			
-		}
-		
-		return list;
+		return collaborators;
 	}
 	
-	public String listSubmissions() {
+	//	retorna submissions ordenadas por ano
+	public Collection<AcademicProduction> listSubmissions() {
 		
-		String list = "";
+		Collection<AcademicProduction> sortedSub = new TreeSet<AcademicProduction>(new compByYear());
+		sortedSub.addAll(submissions);
 		
-		for( AcademicProduction s: submissions ){
-			
-			list = list + s.getTitle() + "; ";
-			
-		}
-		
-		return list;
+		return sortedSub;
 	}
 	
-	public boolean equals(Object obj) {
+	//	implementation of equals and hashCode to hashSet
+	public boolean equals(Project p) {
 		
-		if( obj == null )
+		if( p == null )
 			return false;
 		
-		if( !( obj instanceof Project ) )
-			return false;
-		
-		if( this == obj )
+		if( this == p )
 			return true;
 		
-		return this.hashCode() == ((Project) obj).hashCode();
+		return this.hashCode() == p.hashCode();
 	}
 	
 	public int hashCode() {

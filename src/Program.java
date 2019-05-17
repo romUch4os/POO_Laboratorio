@@ -1,5 +1,9 @@
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Scanner;
 
+
+// 	tirar \n na hora de imprimir as consultas
 public class Program{
 	
 	public static Lab lab = new Lab();
@@ -11,19 +15,20 @@ public class Program{
 		
 		do {
 			
-		System.out.println("< Bem vindo ao " + lab.getName() + " >");
-		System.out.println("Suas opcoes sao:");
-		System.out.println("1)  Menu Projeto( Novo; Atualizar status; Publicar )");
-		System.out.println("2)  Adicionar Colaborador");
-		System.out.println("3)  Alocar Colaborador");
-		System.out.println("4)  Consultar( Colaborador; Projeto )");
-		System.out.println("5)  Relatorio Producao Academica");
-		System.out.println("0)  Sair");
-		System.out.print("Selecione a opcao: ");
-		
-		opt = s.nextInt();
-		
-			switch(opt) {
+			System.out.println("< Bem vindo ao " + lab.getName() + " >");
+			System.out.println("Suas opcoes sao:");
+			System.out.println("1)  Menu Projeto( Novo; Atualizar status; Publicar )");
+			System.out.println("2)  Adicionar Colaborador");
+			System.out.println("3)  Alocar Colaborador");
+			System.out.println("4)  Consultar( Colaborador; Projeto )");
+			System.out.println("5)  Relatorio Producao Academica");
+			System.out.println("0)  Sair");
+			System.out.print("Selecione a opcao: ");
+			
+			opt = readKey();
+			
+			switch( opt ) {
+			
 				case 1:
 					projectMenu();
 					break;
@@ -31,7 +36,10 @@ public class Program{
 					collaboratorMenu();
 					break;
 				case 3:
-					allocCollaborator();
+					if( allocCollaborator() )
+						System.out.println("Colaborador alocado!!");
+					else
+						System.out.println("ALOCACAO INVALIDA!!");
 					break;
 				case 4:
 					consultMenu();
@@ -40,10 +48,15 @@ public class Program{
 					report();
 					break;
 				case 0:
-					System.out.println("see ya!");
+					System.out.println("=============");
+					System.out.println("|| see ya! ||");
+					System.out.println("=============");
+					break;
+				default:
+					System.out.println("OPCAO INVALIDA!!");
 					break;
 			}
-		}while(opt != 0);
+		}while( opt != 0 );
 		
 		s.close();
 	}
@@ -56,18 +69,27 @@ public class Program{
 		System.out.println("3)  Nova publicacao");
 		System.out.println("-)  Qualquer outro valor p/ voltar");
 		
-		int opt = s.nextInt();
+		int opt = readKey();
 		
 		switch(opt) {
 		
 			case 1:
-				addProject();
+				if( addProject() )
+					System.out.println("Projeto adicionado!!");
+				else
+					System.out.println("INFORMACOES INVALIDAS!!");
 				break;
 			case 2:
-				updateStatus();
+				if( updateStatus() )
+					System.out.println("Status Updated!!");
+				else
+					System.out.println("IMPOSSIVEL ALTERAR STATUS!!");
 				break;
 			case 3:
-				addPublication();
+				if( addPublication() )
+					System.out.println("Publicacao lancada!!");
+				else
+					System.out.println("IMPOSSIVEL PUBLICAR!!/INV. INFO!!");
 				break;
 			default:
 				break;
@@ -83,7 +105,7 @@ public class Program{
 		System.out.println("4)  Professor");
 		System.out.println("-)  Qualquer outro valor p/ voltar");
 		
-		int opt = s.nextInt();
+		int opt = readKey();
 		
 		switch(opt) {
 		
@@ -111,7 +133,7 @@ public class Program{
 		System.out.println("2)  Projeto");
 		System.out.println("-)  Qualquer outro valor p/ voltar");
 		
-		int opt = s.nextInt();
+		int opt = readKey();
 		
 		switch(opt) {
 		
@@ -126,68 +148,56 @@ public class Program{
 		}
 	}
 	
-	public static void addProject() {
+	public static boolean addProject() {
 		
 		System.out.println("-> Titulo do projeto:");
 		String title = s.next();
 		
 		System.out.println("Professor gerente:");
 		String managerName = s.next();
-			
+		
 		Collaborator manager = lab.getCollaborator(managerName);
 		
-		// eh melhor fazer essas verificacoes aqui ou em lab?
-		if( (manager != null) && (manager instanceof Teacher) ) {
-			
-			int month;
-			int year;
-			
-			System.out.println("Data de inicio(MM-YY):");
-			System.out.println("Mês:");
-			month = s.nextInt();
-			System.out.println("Ano:");
-			year = s.nextInt();
-			Date startDate = new Date(month, year);
-			
-			System.out.println("Data de termino(MM-YY):");
-			System.out.println("Mês:");
-			month = s.nextInt();
-			System.out.println("Ano:");
-			year = s.nextInt();
-			Date endDate = new Date(month, year);
-			
-			System.out.println("Agencia financiadora:");
-			String agency = s.next();
-			
-			System.out.println("Valor financiado:");
-			String value = s.next();
-			
-			System.out.println("Objetivo do projeto:");
-			String goal = s.next();
-			
-			System.out.println("Descricao do projeto:");
-			String description = s.next();
-			
-			Project project = new Project();
-			project.setTitle(title);
-			project.setManager((Teacher) manager);
-			project.setStartDate(startDate);
-			project.setEndDate(endDate);
-			project.setAgency(agency);
-			project.setValue(value);
-			project.setGoal(goal);
-			project.setDescription(description);
-			
-			if( lab.addProject(project) )
-				System.out.println("Projeto adicionado!!");
-			
-			else
-				System.out.println("Dados invalidos!!");
-			
-		} else
-			System.out.println("COLABORADOR INVALIDO!!");
+		int month;
+		int year;
+		
+		System.out.println("Data de inicio(MM-YYYY):");
+		System.out.println("Mês:");
+		month = readMonth();
+		System.out.println("Ano:");
+		year = readYear();
+		Date startDate = new Date(month, year);
+		
+		System.out.println("Data de termino(MM-YYYY):");
+		System.out.println("Mês:");
+		month = readMonth();
+		System.out.println("Ano:");
+		year = readYear();
+		Date endDate = new Date(month, year);
+		
+		System.out.println("Agencia financiadora:");
+		String agency = s.next();
+		
+		System.out.println("Valor financiado:");
+		String value = s.next();
+		
+		System.out.println("Objetivo do projeto:");
+		String goal = s.next();
+		
+		System.out.println("Descricao do projeto:");
+		String description = s.next();
+		
+		Project project = new Project();
+		project.setTitle(title);
+		project.setStartDate(startDate);
+		project.setEndDate(endDate);
+		project.setAgency(agency);
+		project.setValue(value);
+		project.setGoal(goal);
+		project.setDescription(description);
+		
+		return lab.setProject(project, manager);
 	}
-	
 	
 	public static void addCollaborator(Collaborator c) {
 		
@@ -207,10 +217,10 @@ public class Program{
 		
 		addCollaborator(student);
 		
-		if( lab.addCollaborator(student) )
+		if( lab.setCollaborator(student) )
 			System.out.println("Estudante de Graduacao addicionado!");
 		else
-			System.out.println("Ja existe colaborador com esse nome!");
+			System.out.println("COLABORADOR JA EXISTE!!");
 	}
 	
 	public static void addMastersStudent() {
@@ -219,10 +229,10 @@ public class Program{
 		
 		addCollaborator(student);
 		
-		if( lab.addCollaborator(student) )
+		if( lab.setCollaborator(student) )
 			System.out.println("Estudante de Mestrado addicionado!");
 		else
-			System.out.println("Ja existe colaborador com esse nome!");
+			System.out.println("COLABORADOR JA EXISTE!!");
 	}
 	
 	public static void addResearcher() {
@@ -231,10 +241,10 @@ public class Program{
 		
 		addCollaborator(researcher);
 		
-		if( lab.addCollaborator(researcher) )
+		if( lab.setCollaborator(researcher) )
 			System.out.println("Pesquisador addicionado!");
 		else
-			System.out.println("Ja existe colaborador com esse nome!");
+			System.out.println("COLABORADOR JA EXISTE!!");
 	}
 	
 	public static void addTeacher() {
@@ -243,105 +253,80 @@ public class Program{
 		
 		addCollaborator(teacher);
 		
-		if( lab.addCollaborator(teacher) )
+		if( lab.setCollaborator(teacher) )
 			System.out.println("Professor addicionado!");
 		else
-			System.out.println("Ja existe colaborador com esse nome!");
+			System.out.println("COLABORADOR JA EXISTE!!");
 
 	}
 	
-	public static void allocCollaborator() {
+	public static boolean allocCollaborator() {
 		
 		System.out.println("-> Alocaremos um colaborador para algum projeto!");
 		System.out.println("Colaborador:");
 		String name = s.next();
 		
 		System.out.println("Projeto:");
-		String project = s.next();
+		String title = s.next();
 		
-		if( lab.allocCollaborator(name, project) )
-			System.out.println("Colaborador alocado com sucesso!");
-		else
-			System.out.println("ALOCACAO INVALIDA!!");
+		Collaborator c = lab.getCollaborator(name);
+		Project p = lab.getProject(title);
+		
+		return lab.allocCollaborator(c, p);
 	}
 
-	public static void updateStatus() {
+	public static boolean updateStatus() {
 		
 		System.out.println("-> Atualizar status de qual projeto?");
 		String title = s.next();
 		
 		Project project = lab.getProject(title);
 		
-		if( ! (project == null) ) {
-			
-			System.out.println("Status antigo:" + project.getStatus());
-			
-			if( ! (project.updateStatus()) )
-				System.out.println("O STATUS NAO PODE SER ALTERADO!!");
-				
-			System.out.println("Status atual:" + project.getStatus());
-			
-		}else
-			System.out.println("PROJETO INEXISTENTE!!");
+		if( project == null )
+			return false;
+		
+		return project.updateStatus();
 	}
 	
-	public static void addPublication() {
+	public static boolean addPublication() {
 		
 		System.out.println("-> A qual projeto pertence a publicacao?");
 		String projectTitle = s.next();
 		
 		Project project = lab.getProject(projectTitle);
 		
-		// mesma duvida do addProject
-		if( ( project != null ) && ( project.getStatus().equals("EM ANDAMENTO") ) ) {
-
-			System.out.println("Titulo da publicacao:");
-			String title = s.next();
-			
-			System.out.println("Conferencia da publicacao:");
-			String local = s.next();
-
-			System.out.println("Ano da publicacao:");
-			int year = s.nextInt();
-			
-			Publication publication = new Publication();
-			publication.setTitle(title);
-			publication.setConference(local);
-			publication.setYear(year);
-
-			System.out.println("Colaboradores da publicacao:");
-			System.out.println("Digite 'final' quando terminar");
-			String collaborator;
-			
-			do {
-
-				System.out.println("Colaborador:");				
-				collaborator = s.next();
-				
-				if( project.isInProject(collaborator) ) {
-					
-					Collaborator c = project.getCollaborator(collaborator);
-					publication.setAuthor(c);
-					c.setSubmission(publication);
-					
-				} else
-					if( ! (collaborator.equals("final")) )
-						System.out.println("COOLABORADOR "
-								+ "NAO EXISTE OU NAO PARTICIPA DO PROJETO!!");
-				
-			}while( ! (collaborator.equals("final") ));
-			
-			if(lab.addSubmission(publication)) {
-				
-				project.setSubmission(publication);
-				
-				System.out.println("Publicacao aceita!!");
-				
-			} else 
-				System.out.println("PUBLICACAO INVALIDA!!");
+		System.out.println("Titulo da publicacao:");
+		String title = s.next();
 		
-		} else
-			System.out.println("PROJETO INVALIDO!!");
+		System.out.println("Conferencia da publicacao:");
+		String local = s.next();
+		
+		System.out.println("Ano da publicacao:");
+		int year = readYear();
+	
+		Publication publication = new Publication();
+		publication.setTitle(title);
+		publication.setConference(local);
+		publication.setYear(year);
+		
+		System.out.println("Colaboradores da publicacao:");
+		System.out.println("Digite 'final' quando terminar");
+		String name;
+		Collection<Collaborator> collaborators = new HashSet<Collaborator>();
+			
+		do {
+
+			System.out.println("Colaborador:");				
+			name = s.next();
+				
+			Collaborator c = lab.getCollaborator(name);
+			
+			if( c != null )
+				collaborators.add(c);
+				
+		}while( ! ( name.equals("final") ));
+			
+		return lab.setSubmission(publication, project, collaborators);
 	}
 	
 	public static void consultCollaborator() {
@@ -357,8 +342,17 @@ public class Program{
 			System.out.println("Nome: " + collaborator.getName());
 			System.out.println("Email: " + collaborator.getEmail());
 
-			System.out.println("Projetos: " + collaborator.listProjects());
-			System.out.println("Producao academica: " + collaborator.listSubmissions());
+			Collection<Project> sortedP = collaborator.listProjects();
+			
+			System.out.println("Projetos: ");
+			for( Project p : sortedP )
+				System.out.print(p.getTitle() + "[" + p.getDate() + "]; ");
+			
+			Collection<AcademicProduction> sortedSub = collaborator.listSubmissions();
+			
+			System.out.println("Producao academica: ");
+			for( AcademicProduction ap : sortedSub )
+				System.out.print(ap.getTitle() + "[" + ap.getYear() + "]; ");
 			
 		} else
 			System.out.println("NOME INVALIDO!!");
@@ -381,8 +375,17 @@ public class Program{
 			System.out.println("Valor finaciado: $" + project.getValue());
 			System.out.println("Objetivo: " + project.getGoal());
 			
-			System.out.println("Colaboradores: " + project.listCollaborators());
-			System.out.println("Procucao academica: " + project.listSubmissions());
+			Collection<Collaborator> collaborators = project.listCollaborators();
+			
+			System.out.println("Colaboradores: ");
+			for( Collaborator c : collaborators )
+				System.out.print( c.getName() + "; ");
+			
+			Collection<AcademicProduction> sortedSub = project.listSubmissions();
+			
+			System.out.println("Producao academica: ");
+			for( AcademicProduction ap : sortedSub )
+				System.out.print(ap.getTitle() + "[" + ap.getYear() + "]; ");
 			
 		} else
 			System.out.println("TITULO INVALIDO!!");
@@ -398,5 +401,56 @@ public class Program{
 		System.out.println("Projetos:" + lab.getNumProjects());
 		System.out.println("Publicacoes/Orientacoes:" + lab.getNumSubmissions());
 		
+	}
+	
+	public static int readKey() {
+		
+		String reader;
+		int n;
+		
+		reader = s.next();
+		
+		try {
+			n = Integer.parseInt(reader);
+		}
+		catch( Exception e ) {
+			n = -1;
+		}
+		
+		return n;
+	}
+	
+	public static int readMonth() {
+		
+		String reader;
+		int value;
+		
+		reader = s.next();
+		
+		try {
+			value = Integer.parseInt(reader);
+		}
+		catch( Exception e ) {
+			value = -1;
+		}
+		
+		return ( ( value > 0 ) && ( value < 13 ) ) ? value : -1;
+	}
+	
+	public static int readYear() {
+
+		String reader;
+		int value;
+		
+		reader = s.next();
+		
+		try {
+			value = Integer.parseInt(reader);
+		}
+		catch( Exception e ) {
+			value = -1;
+		}
+		
+		return ( value >= 2009 ) ? value : -1;
 	}
 }

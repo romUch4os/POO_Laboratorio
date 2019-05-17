@@ -1,5 +1,6 @@
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.TreeSet;
 
 public class Collaborator{
 	
@@ -38,41 +39,51 @@ public class Collaborator{
 	public void setSubmission(AcademicProduction submission) {
 		submissions.add(submission);
 	}
+
+	//	verifica se o colaborador eh estudante de graduacao
+	//	e se ja esta em algum projeto
+	//	(se for graduando soh pode estar em 1)
+	public boolean isAllocable() {
+		
+		if( this instanceof GraduationStudent )
+			if( ((GraduationStudent) this).getInProject() )
+				return false;
+		
+		return true;
+	}
 	
-	public String listProjects() {
-
-		String projectList = "";
+	//	retorna uma collection dos projetos
+	//	ordenados por data de termino
+	public Collection<Project> listProjects() {
 		
-		for( Project p: projects )
-			projectList = projectList + p.getTitle() + "; ";
-			
-		return projectList;
+		Collection<Project> sortedP = new TreeSet<Project>(new compByDate());
+		sortedP.addAll(projects);
+		
+		return sortedP;
+	}
+	
+	//	retorna uma collection da producao academica
+	//	ordenados por ano
+	//	(nesse caso em expecifico, 
+	//		a producao academica eh formada apenas por publication)
+	public Collection<AcademicProduction> listSubmissions() {
+		
+		Collection<AcademicProduction> sortedSub = new TreeSet<AcademicProduction>(new compByYear());
+		sortedSub.addAll(submissions);
+		
+		return sortedSub;
 	}
 
-	public String listSubmissions() {
+	//	implementation of equals and hashCode to haseSet
+	public boolean equals(Collaborator c) {
 		
-		String submissionsList = "";
-		
-		for( AcademicProduction s: submissions )
-			submissionsList = submissionsList + s.getTitle() + "; ";
-			
-		return submissionsList;
-	}
-
-	// tentaativa implementar hashCode e equals
-	public boolean equals(Object obj) {
-		
-		if( obj == null )
+		if( c == null )
 			return false;
 		
-		if(!( obj instanceof Collaborator ))
-			return false;
-		
-		if( this == obj )
+		if( this == c )
 			return true;
 		
-		//return getName() == ((Collaborator) obj).getName();
-		return this.hashCode() == ((Collaborator) obj).hashCode();
+		return this.hashCode() == c.hashCode();
 	}
 
 	public int hashCode() {

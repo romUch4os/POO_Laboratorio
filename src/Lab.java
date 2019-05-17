@@ -8,13 +8,18 @@ public class Lab{
 	private Collection<Project> projects;
 	private Collection<AcademicProduction> submissions;
 	
+	/*
+	 *	Todas as collections sao implementadas
+	 *	por hashSet, oq nos dah o poder de limitar
+	 *	os elementos dos conjuntos por nomes.
+	 *	Em suma: nao existe 2 elementos com msm nome.
+	 */
 	public Lab(){
 		
 		collaborators = new HashSet<Collaborator>();
 		projects = new HashSet<Project>();
 		submissions = new HashSet<AcademicProduction>();
 	}
-	
 	
 	public String getName() {
 		return name;
@@ -32,15 +37,7 @@ public class Lab{
 		return submissions.size();
 	}
 	
-	public boolean isCollaborator(String name) {
-		
-		for( Collaborator c: collaborators )
-			if( c.getName().equals(name) )
-				return true;
-		
-		return false;
-	}
-	
+	//	procura colaborador por nome
 	public Collaborator getCollaborator(String name) {
 		
 		for( Collaborator c: collaborators )
@@ -50,15 +47,13 @@ public class Lab{
 		return null;
 	}
 	
-	public boolean isProject(String title) {
+	//	adiciona o colaborador no laboratorio
+	public boolean setCollaborator(Collaborator c) {
 		
-		for( Project p: projects )
-			if( p.getTitle().equals(title) )
-				return true;
-		
-		return false;
+		return collaborators.add(c);
 	}
 	
+	//	procura projeto por nome
 	public Project getProject(String title) {
 		
 		for( Project p: projects )
@@ -68,114 +63,104 @@ public class Lab{
 		return null;
 	}
 	
-	public boolean isSubmission(String title) {
+	 /* 
+	  *	Verifica se o gerente do projeto eh um professor
+	  *	e se o periodo em que ocorrerah eh valido.
+	  *	Caso passe nas verificacoes, o projeto eh adicionado.
+	  */
+	public boolean setProject(Project p, Collaborator manager) {
 		
-		for( AcademicProduction s: submissions )
-			if( s.getTitle().equals(title) )
-				return true;
+		if( ( manager == null ) || !( manager instanceof Teacher ) )
+			return false;
 		
-		return false;
+		if( !( p.getStartDate().validatePeriod(p.getEndDate()) ))
+			return false;
+		
+		if( projects.add(p) ) {
+		
+			p.setManager((Teacher) manager);
+			p.setCollaborator(manager);
+			manager.setProject(p);
+			return true;
+		
+		} else
+			return false;
 	}
 	
+	//	procura producao academica por nome
 	public AcademicProduction getSubmission(String title) {
 		
-		for( AcademicProduction s: submissions )
-			if( s.getTitle().equals(title))
-				return s;
+		for( AcademicProduction sub: submissions )
+			if( sub.getTitle().equals(title))
+				return sub;
 		
 		return null;
 	}
 	
-/*	
-	public boolean addCollaborator(Collaborator collaborator) {
+	/*
+	 * 	A publicacao passa por verificacoes para ser adicionada. 
+	 * 	Verificacoes:
+	 * 		Existem colaboradores na Collection;
+	 * 		Projeto está em andamento;
+	 * 		A data da publicacao esta dentro do periodo do projeto;
+	 * 		Os colaboradores fazem parte do projeto.
+	 */
+	public boolean setSubmission(AcademicProduction submission, Project p, Collection<Collaborator> cSet) {
 		
-		if( isCollaborator( collaborator.getName() ))
+		if( ( p == null ) || ( cSet.size() == 0 ) )
 			return false;
 		
-		collaborators.add(collaborator);
-		
-		return false;
-		
-	}
-*/
-	
-	// testando implementacao de hashCode e equals
-	// na classe Collaborator
-	public boolean addCollaborator(Collaborator c) {
-		
-		c.hashCode();
-		
-		if( collaborators.contains(c) )
+		if( ! (p.getStatus().equals("EM ANDAMENTO") ) )
 			return false;
 		
-		return collaborators.add(c);
-	}
-	
-	public boolean addProject(Project project) {
-		
-		// usar try/catch e instaceof se verificacao for aqui
-		// senao, sao inuteis, apagar
-		try {
-			getCollaborator( project.getManager().getName() );
-			
-		} catch(NullPointerException e) {
-			
-			return false;
-		}
-		
-		Collaborator c = getCollaborator( project.getManager().getName() );
-			
-		if(!( c instanceof Teacher ))
+		if( !( submission.getDate().validatePublication(p.getStartDate(), p.getEndDate()) ))
 			return false;
 		
-		project.setCollaborator(c);
-		c.setProject(project);
-		
-		projects.add(project);
-		
-		return true;
-	}
-	
-	public boolean addSubmission(AcademicProduction submission) {
-		
-		if( submission instanceof Publication )
-			if(!( ((Publication) submission).isValid() ))
+		for( Collaborator c: cSet )
+			if( ! ( p.isInProject(c) ) )
 				return false;
-
-		submissions.add(submission);
-		return true;	
+		
+		if( submissions.add(submission) ) {
+			
+			p.setSubmission(submission);
+			for( Collaborator c: cSet )
+				c.setSubmission(submission);
+			
+			return true;
+			
+		} else
+			return false;	
 	}
 	
-	
-	public boolean allocCollaborator(String collaborator, String project) {
+	/*
+	 * 	Verifica validade de colaborador e projeto
+	 * 	Verifica se pode ser alocado
+	 * 	Tudo ok -> aloca o colaborador ao projeto
+	 * */
+	public boolean allocCollaborator(Collaborator c, Project p) {
 		
-		if(!( isCollaborator(collaborator) ))
+		if( ( c == null ) || ( p == null ) )
 			return false;
 		
-		if(!( isProject(project) ))
+		if( ! ( c.isAllocable() ) )
 			return false;
-		
-		Collaborator c = getCollaborator(collaborator);
-		Project p = getProject(project);
-		
-		if( c instanceof GraduationStudent )
-			if( ((GraduationStudent)c).getInProject() )
-				return false;
-			else
-				((GraduationStudent)c).setInProject(true);
 		
 		c.setProject(p);
 		p.setCollaborator(c);
 		
+		if( c instanceof GraduationStudent )
+			((GraduationStudent) c).setInProject();
+		
 		return true;
 	}
 	
+	//	retorna o numero de projetos por etapa
 	public int getNumBuilding() {
 		
 		int num = 0;
 		
 		for( Project p: projects )
-			if( p.getStatus().equals("EM ELABORACAO") );
+			if( p.getStatus().equals("EM ELABORACAO") )
 				num++;
 		
 		return num;

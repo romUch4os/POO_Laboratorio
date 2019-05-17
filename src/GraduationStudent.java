@@ -6,7 +6,11 @@ public class GraduationStudent extends Collaborator{
 		return inProject;
 	}
 
-	public void setInProject(Boolean inProject) {
-		this.inProject = inProject;
+	public void setInProject() {
+		this.inProject = true;
 	}	
+	
+	public void freeStudent() {
+		this.inProject = false;
+	}
 }
