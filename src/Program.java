@@ -3,7 +3,6 @@ import java.util.HashSet;
 import java.util.Scanner;
 
 
-// 	tirar \n na hora de imprimir as consultas
 public class Program{
 	
 	public static Lab lab = new Lab();
@@ -15,7 +14,7 @@ public class Program{
 		
 		do {
 			
-			System.out.println("< Bem vindo ao " + lab.getName() + " >");
+			System.out.println("\n< Bem vindo ao " + lab.getName() + " >");
 			System.out.println("Suas opcoes sao:");
 			System.out.println("1)  Menu Projeto( Novo; Atualizar status; Publicar )");
 			System.out.println("2)  Adicionar Colaborador");
@@ -350,7 +349,7 @@ public class Program{
 			
 			Collection<AcademicProduction> sortedSub = collaborator.listSubmissions();
 			
-			System.out.println("Producao academica: ");
+			System.out.println("\nProducao academica: ");
 			for( AcademicProduction ap : sortedSub )
 				System.out.print(ap.getTitle() + "[" + ap.getYear() + "]; ");
 			
@@ -383,7 +382,7 @@ public class Program{
 			
 			Collection<AcademicProduction> sortedSub = project.listSubmissions();
 			
-			System.out.println("Producao academica: ");
+			System.out.println("\nProducao academica: ");
 			for( AcademicProduction ap : sortedSub )
 				System.out.print(ap.getTitle() + "[" + ap.getYear() + "]; ");
 			

@@ -136,7 +136,7 @@ public class Lab{
 	 * 	Verifica validade de colaborador e projeto
 	 * 	Verifica se pode ser alocado
 	 * 	Tudo ok -> aloca o colaborador ao projeto
-	 * */
+	 */
 	public boolean allocCollaborator(Collaborator c, Project p) {
 		
 		if( ( c == null ) || ( p == null ) )

@@ -42,7 +42,7 @@ public class Collaborator{
 
 	//	verifica se o colaborador eh estudante de graduacao
 	//	e se ja esta em algum projeto
-	//	(se for graduando soh pode estar em 1)
+	//	(se for graduando soh pode estar em 1 em andamento)
 	public boolean isAllocable() {
 		
 		if( this instanceof GraduationStudent )
