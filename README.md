@@ -1,4 +1,4 @@
-# UFSJ_19-1_POO-tp1
+# Laboratorio UFSJ
 
 - Programador(es): 
     - Lucas Romulo de Souza Resende
