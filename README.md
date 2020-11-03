@@ -1,8 +1,7 @@
 # Laboratorio UFSJ
 
-- Programador(es): 
+- Programador: 
     - Lucas Romulo de Souza Resende
-    - Aladjáh Mejuto de Oliveira
 - @Universidade Federal de Sao Joao del Rei
 - Specs: Trabalho 01.pdf
 - Data: ano2019_semestre01
