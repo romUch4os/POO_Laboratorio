@@ -10,7 +10,7 @@
 
 
 
-A ideia do trabalho eh criar um "banco de dados" de um laboratorio da UFSJ.
+A ideia do trabalho é criar um sistema que simula um laboratorio da UFSJ.
 A manipulacao se da por adicao de colaboradores, projetos, e producoes academicas,
   sendo possivel a emissao de um relatorio da producao de cada colaborador,
-  projeto ou do laboratorio todo. 
+  de cada projeto, ou do laboratorio todo. 
